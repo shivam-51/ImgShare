@@ -14,7 +14,7 @@ class Navbar extends Component {
 						<i className="fab fa-github fa-2x"></i>
 					</a>
 					<a href="https://facebook.com/heyshivam51" target="blank">
-						<i class="fab fa-facebook fa-2x"></i>
+						<i className="fab fa-facebook fa-2x"></i>
 					</a>
 				</div>
 			</nav>
