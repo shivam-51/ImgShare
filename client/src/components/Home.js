@@ -1,14 +1,17 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+
+import axios from "axios";
 import "./styles/home.css";
 
 class Home extends Component {
 	state = {
 		// Initially, no file is selected
 		src: "http://placehold.it/180",
+		zzzppp: false,
 		exists: false,
 	};
 
-	// On file select (from the pop up)
 	onFileChange = (event) => {
 		// Update the state
 		this.src = event.target.image;
@@ -18,15 +21,20 @@ class Home extends Component {
 			this.setState({ src: e.target.result });
 		};
 		reader.readAsDataURL(event.target.files[0]);
-		console.log(reader.result);
-		console.log(event.target.files[0].name);
+
+		// console.log(this.state.src);
 	};
-	handleSubmit = () => {
-		return (
-			<div className="pt-5">
-				<img id="blah" src={this.state.src} alt="your pic"></img>
-			</div>
-		);
+	thissubmit = () => {
+		// console.log("Submitting");
+		const thisimage = {
+			src: this.state.src,
+		};
+		// console.log("From home");
+		// console.log(thisimage.src);
+		axios
+			.post("http://localhost:5000/image/add", thisimage)
+			.then(() => console.log("Sent from Home.js"))
+			.catch((err) => console.log(err));
 	};
 	call = () => {
 		if (this.exists)
@@ -39,9 +47,8 @@ class Home extends Component {
 	render() {
 		return (
 			<div className="home_page pt-5">
-				{/* <h1>Hi from Home</h1> */}
 				<div>
-					<form onSubmit={this.handleSubmit}>
+					<form>
 						<input
 							type="file"
 							name="image_image"
@@ -50,11 +57,13 @@ class Home extends Component {
 						></input>
 						<br />
 						<br />
-						<div className="box-3" type="submit" value="submit">
-							<div className="btn btn-three">
-								<span>Upload Image</span>
+						<Link to="/" onClick={this.thissubmit}>
+							<div className="box-3" type="submit" value="submit">
+								<div className="btn btn-three">
+									<span>Upload Image</span>
+								</div>
 							</div>
-						</div>
+						</Link>
 					</form>
 					<div className="mt-3 pt-3">{this.call()}</div>
 				</div>
