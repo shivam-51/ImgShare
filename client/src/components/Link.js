@@ -1,51 +1,59 @@
 import React, { Component } from "react";
 import axios from "axios";
-
-const IMAGES = (props) => {
-	console.log(props.image);
-	console.log(props.image.src);
-	// const ss = `data:${props.image.src.type};base64,${Buffer.from(
-	// 	props.image.src.data
-	// ).toString("base64")}`;
-	// var thumb = new Buffer.from(props.image.src.data).toString("base64");
-	// console.log(thumb);
-	// console.log(Buffer.from(props.image.src.data).toString("base64"));
-	return (
-		<div>
-			<img alt=" " src={props.image.src} />
-		</div>
-	);
-};
+import "./styles/showImages.css";
 
 class Link extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { images: [] };
+		this.state = { src: "", isLoading: true };
+		// this.getfunction = this.getfunction.bind(this);
+		this.Loaded = this.Loaded.bind(this);
+		this.Loading = this.Loading.bind(this);
 	}
 	componentDidMount() {
+		this.isLoading = true;
 		axios
-			.get("http://localhost:5000/image/all")
+			.get("http://localhost:5000/image/" + this.props.match.params.id)
 			.then((response) => {
-				this.setState({ images: response.data });
+				this.setState({
+					src: response.data.src,
+					isLoading: false,
+				});
+				console.log(response);
 			})
-			.catch((error) => {
+			.catch(function (error) {
 				console.log(error);
 			});
 	}
-
-	imageList() {
-		// console.log("Here");
-		return this.state.images.map((currentimage) => {
-			return <IMAGES image={currentimage} key={currentimage._id} />;
-		});
+	Loaded() {
+		return (
+			<img
+				className="img-fluid imageclass"
+				alt=" "
+				src={this.state.src}
+			/>
+		);
 	}
 
+	Loading() {
+		return (
+			<div className="spinner">
+				<div className="cube1"></div>
+				<div className="cube2"></div>
+			</div>
+		);
+	}
 	render() {
+		let el;
+		if (this.state.isLoading) {
+			el = <this.Loading />;
+		} else {
+			el = <this.Loaded />;
+		}
 		return (
 			<div>
-				<h1>Hi from Link</h1>
-				{this.imageList()}
+				<div className="p-5 Show_Image">{el}</div>
 			</div>
 		);
 	}

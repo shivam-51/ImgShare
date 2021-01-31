@@ -7,6 +7,10 @@ const ImageSchema = new Schema({
 		type: String,
 		required: true,
 	},
+	uniqueID: {
+		type: String,
+		required: true,
+	},
 });
 
 const Image = mongoose.model("Images1", ImageSchema);

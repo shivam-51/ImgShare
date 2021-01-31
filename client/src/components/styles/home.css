@@ -17,9 +17,9 @@
 	background-image: radial-gradient(135deg, #4ca1af 0%, #c4e0e5 100%); */
 	/* background-image: radial-gradient(135deg, #4ca1af 0%, #c4e0e5 100%); */
 }
-img {
-	max-width: 280px;
-}
+/* imghome {
+	max-width: 280px; */
+/* } */
 input[type="file"] {
 	padding: 10px;
 }
